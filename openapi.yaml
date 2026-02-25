@@ -17,10 +17,7 @@ components:
   schemas:
     Task:
       type: object
-      required:
-        - date
-        - title
-        - priority
+      required: [date, title, priority]
       properties:
         date:
           type: string
@@ -31,10 +28,14 @@ components:
           type: string
           enum: [alta, media, baixa]
 
-    TaskList:
-      type: array
-      items:
-        $ref: "#/components/schemas/Task"
+    CreateTasksRequest:
+      type: object
+      required: [tasks]
+      properties:
+        tasks:
+          type: array
+          items:
+            $ref: "#/components/schemas/Task"
 
 security:
   - bearerAuth: []
@@ -49,20 +50,6 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TaskList"
+              $ref: "#/components/schemas/CreateTasksRequest"
       responses:
-        "200":
-          description: OK
-
-    get:
-      operationId: listTasks
-      summary: Listar tarefas
-      parameters:
-        - name: date
-          in: query
-          required: false
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Lista de tarefas
+        "200
