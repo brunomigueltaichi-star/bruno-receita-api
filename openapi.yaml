@@ -52,4 +52,18 @@ paths:
             schema:
               $ref: "#/components/schemas/CreateTasksRequest"
       responses:
-        "200
+        "200":
+          description: OK
+
+    get:
+      operationId: listTasks
+      summary: Listar tarefas
+      parameters:
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lista de tarefas
