@@ -1,8 +1,10 @@
-openapi: 3.0.1
+openapi: 3.1.0
+
 info:
   title: Bruno Operador - Tasks API
   version: "1.0"
   description: API para registar e consultar tarefas diárias.
+
 servers:
   - url: https://bruno-receita-api.onrender.com
 
@@ -12,6 +14,28 @@ components:
       type: http
       scheme: bearer
 
+  schemas:
+    Task:
+      type: object
+      required:
+        - date
+        - title
+        - priority
+      properties:
+        date:
+          type: string
+          description: YYYY-MM-DD
+        title:
+          type: string
+        priority:
+          type: string
+          enum: [alta, media, baixa]
+
+    TaskList:
+      type: array
+      items:
+        $ref: "#/components/schemas/Task"
+
 security:
   - bearerAuth: []
 
@@ -20,24 +44,12 @@ paths:
     post:
       operationId: createTasks
       summary: Criar tarefas diárias
-      security:
-        - bearerAuth: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                required: [date, title, priority]
-                properties:
-                  date:
-                    type: string
-                  title:
-                    type: string
-                  priority:
-                    type: string
+              $ref: "#/components/schemas/TaskList"
       responses:
         "200":
           description: OK
@@ -45,8 +57,6 @@ paths:
     get:
       operationId: listTasks
       summary: Listar tarefas
-      security:
-        - bearerAuth: []
       parameters:
         - name: date
           in: query
