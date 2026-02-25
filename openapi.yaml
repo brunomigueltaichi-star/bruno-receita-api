@@ -1,0 +1,58 @@
+openapi: 3.0.1
+info:
+  title: Bruno Operador - Tasks API
+  version: "1.0"
+  description: API para registar e consultar tarefas diárias.
+servers:
+  - url: https://TEU-SERVICO.onrender.com
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+security:
+  - bearerAuth: []
+
+paths:
+  /tasks:
+    post:
+      operationId: createTasks
+      summary: Criar tarefas diárias
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                required: [date, title, priority]
+                properties:
+                  date:
+                    type: string
+                  title:
+                    type: string
+                  priority:
+                    type: string
+      responses:
+        "200":
+          description: OK
+
+    get:
+      operationId: listTasks
+      summary: Listar tarefas
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lista de tarefas
