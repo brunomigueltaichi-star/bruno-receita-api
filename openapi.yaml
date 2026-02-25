@@ -4,7 +4,7 @@ info:
   version: "1.0"
   description: API para registar e consultar tarefas diárias.
 servers:
-  - url: https://TEU-SERVICO.onrender.com
+  - url: https://bruno-receita-api.onrender.com
 
 components:
   securitySchemes:
